@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace ClangPowerTools.ErrorLineMarker
 {
-  internal class VsTextMarkerController : IVsTextMarkerClient, IDisposable
+  internal class VsTextMarkerController : IVsTextMarkerClient
   {
     #region Members
 
@@ -20,15 +20,24 @@ namespace ClangPowerTools.ErrorLineMarker
 
     private Dictionary<string, List<TaskErrorModel>> mErrors;
 
+    private IVsTextManager mVsTextManager;
+
     #endregion
 
+    #region Constructor
+
+    public VsTextMarkerController()
+    {
+    }
+
+    #endregion
 
     #region Public Methods
 
     public void Initialize()
     {
-      var textManager = VsServiceProvider.GetService(typeof(SVsTextManager)) as IVsTextManager;
-      textManager.GetActiveView(1, null, out mVsTextView);
+      mVsTextManager = VsServiceProvider.GetService(typeof(SVsTextManager)) as IVsTextManager;
+      mVsTextManager.GetActiveView(1, null, out mVsTextView);
       mVsTextView.GetBuffer(out mVsTextLines);
       mVsTextLineMarkers = new IVsTextLineMarker[1];
     }
@@ -89,18 +98,24 @@ namespace ClangPowerTools.ErrorLineMarker
 
     #region IDisposable Implementation
 
-    public void Dispose()
+    public void Clear()
     {
-      mVsTextLineMarkers[0].Invalidate();
-      mVsTextLineMarkers[0].UnadviseClient();
-      mVsTextLineMarkers[0] = null;
+      if (null != mVsTextLineMarkers )
+      {
+        mVsTextLineMarkers[0].Invalidate();
+        mVsTextLineMarkers[0].UnadviseClient();
+        mVsTextLineMarkers[0] = null;
+      }
+      
+      if(null != mErrors)
+      {
+        mErrors.Clear();
+        mErrors = null;
+      }
 
-      mErrors.Clear();
-      mErrors = null;
+      mVsTextManager = null;
       mVsTextView = null;
       mVsTextLines = null;
-
-      GC.SuppressFinalize(this);
     }
 
     #endregion

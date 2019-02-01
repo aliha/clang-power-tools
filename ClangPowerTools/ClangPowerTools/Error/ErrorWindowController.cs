@@ -10,6 +10,12 @@ namespace ClangPowerTools
 {
   public class ErrorWindowController : ErrorListProvider
   {
+    #region Members
+
+    private VsTextMarkerController mVsTextMarkerController = new VsTextMarkerController();
+
+    #endregion
+
     #region Constructor
 
     /// <summary>
@@ -42,9 +48,8 @@ namespace ClangPowerTools
         BringToFront();
       });
 
-      var mVsTextMarkerController = new VsTextMarkerController();
+      mVsTextMarkerController.Clear();
       mVsTextMarkerController.Initialize();
-
       mVsTextMarkerController.OnErrorDetected(e.ErrorList);
     }
 
