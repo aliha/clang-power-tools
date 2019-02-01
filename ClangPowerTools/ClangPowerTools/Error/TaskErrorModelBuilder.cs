@@ -16,7 +16,7 @@ namespace ClangPowerTools.Error
     #endregion
 
 
-    #region Consstructor
+    #region Constructor
 
 
     public TaskErrorModelBuilder(IVsHierarchy aHierarchy, Match aMatchResult)

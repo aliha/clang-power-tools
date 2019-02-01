@@ -1,13 +1,16 @@
 ﻿using ClangPowerTools.Commands;
 using ClangPowerTools.DialogPages;
+using ClangPowerTools.ErrorLineMarker;
 using ClangPowerTools.Output;
 using ClangPowerTools.Services;
 using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.CommandBars;
+using Microsoft.VisualStudio.ComponentModelHost;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.VisualStudio.TextManager.Interop;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -63,6 +66,8 @@ namespace ClangPowerTools
     private OutputWindowController mOutputWindowController;
     private CommandsController mCommandsController;
 
+    //private VsTextMarkerController mVsTextMarkerController;
+
     private CommandEvents mCommandEvents;
     private BuildEvents mBuildEvents;
     private DTEEvents mDteEvents;
@@ -94,6 +99,8 @@ namespace ClangPowerTools
     /// Initialization of the package; this method is called right after the package is sited, so this is the place
     /// where you can put all the initialization code that rely on services provided by VisualStudio.
     /// </summary>
+    /// <param name="cancellationToken">todo: describe cancellationToken parameter on InitializeAsync</param>
+    /// <param name="progress">todo: describe progress parameter on InitializeAsync</param>
     protected override async System.Threading.Tasks.Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
     {
       // Switches to the UI thread in order to consume some services used in command initialization
@@ -228,12 +235,11 @@ namespace ClangPowerTools
       return VSConstants.S_OK;
     }
 
-
     public int OnAfterOpenSolution(object aPUnkReserved, int aFNewSolution)
     {
+      //mVsTextMarkerController.Initialize();
       return VSConstants.S_OK;
     }
-
 
     public int OnQueryCloseSolution(object aPUnkReserved, ref int aPfCancel)
     {
@@ -282,6 +288,14 @@ namespace ClangPowerTools
       // Get VS Solution service async
       var vsSolution = await GetServiceAsync(typeof(SVsSolution));
       VsServiceProvider.Register(typeof(SVsSolution), vsSolution);
+
+      // Get VS Text Manager service async
+      var vsTextManager = await GetServiceAsync(typeof(SVsTextManager));
+      VsServiceProvider.Register(typeof(SVsTextManager), vsTextManager);
+
+      // Get SComponentModel service async
+      var sComponentModel = await GetServiceAsync(typeof(SComponentModel));
+      VsServiceProvider.Register(typeof(SComponentModel), sComponentModel);
     }
 
 
@@ -305,6 +319,15 @@ namespace ClangPowerTools
       TidyCommand.Instance.HierarchyDetectedEvent += mCommandsController.OnFileHierarchyChanged;
 
       mOutputWindowController.ErrorDetectedEvent += mErrorWindowController.OnErrorDetected;
+
+
+
+
+      //mOutputWindowController.ErrorDetectedEvent += mVsTextMarkerController.OnErrorDetected;
+
+
+
+
       mOutputWindowController.MissingLlvmEvent += mCommandsController.OnMissingLLVMDetected;
       mOutputWindowController.CloseDataConnectionEvent += mCommandsController.OnCloseCommandDataConnection;
 
@@ -359,6 +382,16 @@ namespace ClangPowerTools
       TidyCommand.Instance.HierarchyDetectedEvent -= mCommandsController.OnFileHierarchyChanged;
 
       mOutputWindowController.ErrorDetectedEvent -= mErrorWindowController.OnErrorDetected;
+
+
+
+
+
+     // mOutputWindowController.ErrorDetectedEvent -= mVsTextMarkerController.OnErrorDetected;
+
+
+
+
       mOutputWindowController.MissingLlvmEvent -= mCommandsController.OnMissingLLVMDetected;
       mOutputWindowController.CloseDataConnectionEvent -= mCommandsController.OnCloseCommandDataConnection;
 

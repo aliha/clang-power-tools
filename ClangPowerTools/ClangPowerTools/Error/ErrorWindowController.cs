@@ -1,4 +1,5 @@
-﻿using ClangPowerTools.Events;
+﻿using ClangPowerTools.ErrorLineMarker;
+using ClangPowerTools.Events;
 using ClangPowerTools.Handlers;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell;
@@ -40,10 +41,15 @@ namespace ClangPowerTools
         ResumeRefresh();
         BringToFront();
       });
+
+      var mVsTextMarkerController = new VsTextMarkerController();
+      mVsTextMarkerController.Initialize();
+
+      mVsTextMarkerController.OnErrorDetected(e.ErrorList);
     }
 
 
-    public void RemoveErrors(IVsHierarchy aHierarchy)
+  public void RemoveErrors(IVsHierarchy aHierarchy)
     {
       UIUpdater.Invoke(() =>
       {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Windows;
 
 namespace ClangPowerTools
 {
@@ -43,8 +44,9 @@ namespace ClangPowerTools
         process.BeginOutputReadLine();
         process.WaitForExit();
       }
-      catch (Exception)
+      catch (Exception e)
       {
+        MessageBox.Show(e.Message);
       }
       finally
       {
