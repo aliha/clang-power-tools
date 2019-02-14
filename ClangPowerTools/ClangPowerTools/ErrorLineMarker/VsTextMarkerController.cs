@@ -49,7 +49,6 @@ namespace ClangPowerTools.ErrorLineMarker
     }
 
 
-
     public void OnErrorDetected(object sender, ErrorDetectedEventArgs e)
     {
       mErrors = GroupErrorsAfterFileName(e.ErrorList);
@@ -100,7 +99,7 @@ namespace ClangPowerTools.ErrorLineMarker
 
     public void Clear()
     {
-      if (null != mVsTextLineMarkers )
+      if (null != mVsTextLineMarkers && null != mVsTextLineMarkers[0])
       {
         mVsTextLineMarkers[0].Invalidate();
         mVsTextLineMarkers[0].UnadviseClient();
@@ -162,9 +161,6 @@ namespace ClangPowerTools.ErrorLineMarker
     {
       mVsTextLines.CreateLineMarker(aMarker.Type, aMarker.StartLine,
         aMarker.StartIndex, aMarker.EndLine, aMarker.EndIndex, this, mVsTextLineMarkers);
-
-      mVsTextLines.CreateLineMarker(aMarker.Type, 1,
-        1, 1, 7, this, mVsTextLineMarkers);
     }
 
     private Dictionary<string, List<TaskErrorModel>> GroupErrorsAfterFileName(IEnumerable<TaskErrorModel> aErrorList)
