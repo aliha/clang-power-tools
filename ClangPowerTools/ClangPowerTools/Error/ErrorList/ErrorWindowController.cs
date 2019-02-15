@@ -1,9 +1,11 @@
-﻿using ClangPowerTools.ErrorLineMarker;
+﻿using ClangPowerTools.Error.Tags;
+using ClangPowerTools.ErrorLineMarker;
 using ClangPowerTools.Events;
 using ClangPowerTools.Handlers;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.VisualStudio.Text.Tagging;
 using System;
 
 namespace ClangPowerTools
@@ -14,7 +16,12 @@ namespace ClangPowerTools
 
     private VsTextMarkerController mVsTextMarkerController = new VsTextMarkerController();
 
+    private ErrorTaggerProvider mErrorTaggerProvider = new ErrorTaggerProvider();
+
+    private ErrorTagger tagger;
+
     #endregion
+
 
     #region Constructor
 
@@ -48,9 +55,13 @@ namespace ClangPowerTools
         BringToFront();
       });
 
-      mVsTextMarkerController.Clear();
-      mVsTextMarkerController.Initialize();
-      mVsTextMarkerController.OnErrorDetected(e.ErrorList);
+      mErrorTaggerProvider.Errors = e.ErrorList;
+      tagger = mErrorTaggerProvider.CreateTagger<IErrorTag>(DocumentsHandler.GetDocumentTextBuffer());
+
+
+      //mVsTextMarkerController.Clear();
+      //mVsTextMarkerController.Initialize();
+      //mVsTextMarkerController.OnErrorDetected(e.ErrorList);
     }
 
 
