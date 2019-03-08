@@ -78,7 +78,7 @@ namespace ClangPowerTools
     #region Public Methods
 
 
-    public async System.Threading.Tasks.Task InitializeAsyncCommands(AsyncPackage aAsyncPackage)
+    public async System.Threading.Tasks.Task InitializeCommandsAsync(AsyncPackage aAsyncPackage)
     {
       if (null == CompileCommand.Instance)
         await CompileCommand.InitializeAsync(this, aAsyncPackage, mCommandSet, CommandIds.kCompileId);
@@ -107,7 +107,7 @@ namespace ClangPowerTools
     }
 
 
-    public async void ExecuteAsync(object sender, EventArgs e)
+    public async void Execute(object sender, EventArgs e)
     {
       if (!(sender is OleMenuCommand command))
         return;
@@ -138,14 +138,14 @@ namespace ClangPowerTools
         case CommandIds.kCompileId:
           {
             OnBeforeClangCommand(CommandIds.kCompileId);
-            await CompileCommand.Instance.RunClangCompile(CommandIds.kCompileId);
+            await CompileCommand.Instance.RunClangCompileAsync(CommandIds.kCompileId);
             OnAfterClangCommand();
             break;
           }
         case CommandIds.kTidyId:
           {
             OnBeforeClangCommand(CommandIds.kTidyId);
-            await TidyCommand.Instance.RunClangTidy(CommandIds.kTidyId);
+            await TidyCommand.Instance.RunClangTidyAsync(CommandIds.kTidyId);
             OnAfterClangCommand();
             break;
           }
@@ -153,7 +153,7 @@ namespace ClangPowerTools
         case CommandIds.kTidyFixMenuId:
           {
             OnBeforeClangCommand(CommandIds.kTidyFixId);
-            await TidyCommand.Instance.RunClangTidy(CommandIds.kTidyFixId);
+            await TidyCommand.Instance.RunClangTidyAsync(CommandIds.kTidyFixId);
             OnAfterClangCommand();
             break;
           }
@@ -263,7 +263,7 @@ namespace ClangPowerTools
     /// <param name="e"></param>
     public void OnBeforeClangCommand(object sender, EventArgs e)
     {
-      UIUpdater.Invoke(() =>
+      var task = UIUpdater.InvokeAsync(() =>
       {
         if (!(sender is OleMenuCommand command))
           return;
@@ -296,7 +296,7 @@ namespace ClangPowerTools
     public void OnMSVCBuildDone(vsBuildScope Scope, vsBuildAction Action)
     {
       VsBuildRunning = false;
-      OnMSVCBuildSucceededAsync();
+      var task = OnMSVCBuildSucceededAsync();
     }
 
 
@@ -319,7 +319,7 @@ namespace ClangPowerTools
       // Run clang compile after the VS compile succeeded
 
       OnBeforeClangCommand(CommandIds.kCompileId);
-      await CompileCommand.Instance.RunClangCompile(CommandIds.kCompileId);
+      await CompileCommand.Instance.RunClangCompileAsync(CommandIds.kCompileId);
       CompileCommand.Instance.VsCompileFlag = false;
       OnAfterClangCommand();
     }
@@ -345,7 +345,7 @@ namespace ClangPowerTools
       if (true == Running) // Clang compile/tidy command is running
         return;
 
-      TidyCommand.Instance.RunClangTidy(CommandIds.kTidyFixId);
+      var task = TidyCommand.Instance.RunClangTidyAsync(CommandIds.kTidyFixId);
       mSaveCommandWasGiven = false;
     }
 

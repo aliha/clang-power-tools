@@ -67,7 +67,7 @@ namespace ClangPowerTools.Output
     {
       mOutputContent = new OutputContentModel();
       var outputWindow = mOutputWindowBuilder.GetResult();
-      UIUpdater.Invoke(() =>
+      var task = UIUpdater.InvokeAsync(() =>
       {
         outputWindow.Pane.Clear();
       });
@@ -76,7 +76,7 @@ namespace ClangPowerTools.Output
     public void Show()
     {
       var outputWindow = mOutputWindowBuilder.GetResult();
-      UIUpdater.Invoke(() =>
+      var task = UIUpdater.InvokeAsync(() =>
       {
         outputWindow.Pane.Activate();
         if (VsServiceProvider.TryGetService(typeof(DTE), out object dte))

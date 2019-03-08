@@ -13,7 +13,7 @@ namespace ClangPowerTools
 
     public static void Text(string aText, int aFreezeStatusBar)
     {
-      UIUpdater.Invoke(() =>
+      var task = UIUpdater.InvokeAsync(() =>
       {
         if (!VsServiceProvider.TryGetService(typeof(SVsStatusbar), out object statusBarService) || null == statusBarService as IVsStatusbar)
           return;
@@ -42,7 +42,7 @@ namespace ClangPowerTools
 
     public static void Animation(vsStatusAnimation aAnimation, int aEnableAnimation)
     {
-      UIUpdater.Invoke(() =>
+      var task = UIUpdater.InvokeAsync(() =>
       {
         if (!VsServiceProvider.TryGetService(typeof(SVsStatusbar), out object statusBarService) || null == statusBarService as IVsStatusbar)
           return;

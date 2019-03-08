@@ -27,7 +27,7 @@ namespace ClangPowerTools
 
     public void OnErrorDetected(object sender, ErrorDetectedEventArgs e)
     {
-      UIUpdater.Invoke(() =>
+      var task = UIUpdater.InvokeAsync(() =>
       {
         SuspendRefresh();
 
@@ -45,7 +45,7 @@ namespace ClangPowerTools
 
     public void RemoveErrors(IVsHierarchy aHierarchy)
     {
-      UIUpdater.Invoke(() =>
+      var task = UIUpdater.InvokeAsync(() =>
       {
         SuspendRefresh();
 
@@ -72,7 +72,7 @@ namespace ClangPowerTools
 
     public void Clear()
     {
-      UIUpdater.Invoke(() =>
+      var task = UIUpdater.InvokeAsync(() =>
       {
         Tasks.Clear();
       });
