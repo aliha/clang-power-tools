@@ -175,6 +175,8 @@ namespace ClangPowerTools.Commands
 
     private void FormatAllSelectedDocuments()
     {
+      Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+
       foreach (var item in CollectSelectedItems(true))
       {
         var document = (item.GetObject() as ProjectItem).Document;

@@ -15,6 +15,8 @@ namespace ClangPowerTools
     {
       var task = UIUpdater.InvokeAsync(() =>
       {
+        Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+
         if (!VsServiceProvider.TryGetService(typeof(SVsStatusbar), out object statusBarService) || null == statusBarService as IVsStatusbar)
           return;
 

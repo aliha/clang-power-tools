@@ -12,11 +12,11 @@ namespace ClangPowerTools
     => aItems.Select(item => item.GetPath());
 
 
-    public IEnumerable<string> Collect(Documents aDocuments)
-      => aDocuments.Cast<Document>().Select(doc => doc.FullName);
+    //public IEnumerable<string> Collect(Documents aDocuments)
+    //  => aDocuments.Cast<Document>().Select(doc => doc.FullName);
 
 
-    public string Collect(Document aDocument) => aDocument.FullName;
+    //public string Collect(Document aDocument) => aDocument.FullName;
 
     #endregion
   }

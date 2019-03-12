@@ -354,6 +354,8 @@ namespace ClangPowerTools
 
     private void BeforeSaveClangFormat(Document aDocument)
     {
+      Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+
       var clangFormatOptionPage = SettingsProvider.ClangFormatSettings;
       var tidyOptionPage = SettingsProvider.TidySettings;
 

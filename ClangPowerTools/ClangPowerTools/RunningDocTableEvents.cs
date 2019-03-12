@@ -77,6 +77,8 @@ namespace ClangPowerTools
     {
       try
       {
+        Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+
         if (null == BeforeSave)
           return VSConstants.S_OK;
 
@@ -99,6 +101,8 @@ namespace ClangPowerTools
 
     private Document FindDocumentByCookie(uint docCookie)
     {
+      Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+
       Document document = null;
       try
       {

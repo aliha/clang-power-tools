@@ -36,6 +36,8 @@ namespace ClangPowerTools
 
     public static IWpfTextView GetDocumentView(Document document)
     {
+      Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+
       var textView = GetVsTextViewFrompPath(document.FullName);
       return VsToWpfTextView(textView);
     }
@@ -53,6 +55,8 @@ namespace ClangPowerTools
 
     public static IVsTextView GetVsTextViewFrompPath(string filePath)
     {
+      Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+
       var dte2 = (EnvDTE80.DTE2)Package.GetGlobalService(typeof(SDTE));
       var sp = (Microsoft.VisualStudio.OLE.Interop.IServiceProvider)dte2;
       var serviceProvider = new Microsoft.VisualStudio.Shell.ServiceProvider(sp);

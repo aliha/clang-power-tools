@@ -206,6 +206,8 @@ namespace ClangPowerTools
 
     public int OnBeforeCloseProject(IVsHierarchy aPHierarchy, int aFRemoved)
     {
+      Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+
       aPHierarchy.GetProperty(VSConstants.VSITEMID_ROOT, (int)__VSHPROPID.VSHPROPID_ExtObject, out object projectObject);
       if (projectObject is Project project)
         mErrorWindowController.RemoveErrors(aPHierarchy);
