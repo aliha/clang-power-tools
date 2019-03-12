@@ -12,6 +12,8 @@ namespace ClangPowerTools
       if (false == succes)
         return string.Empty;
 
+      //Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+
       return configuration.PlatformName;
     }
 
@@ -20,6 +22,8 @@ namespace ClangPowerTools
       var succes = GetActiveConfiguration(aProject, out Configuration configuration);
       if (false == succes)
         return string.Empty;
+
+      //Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
       return configuration.ConfigurationName;
     }
@@ -30,6 +34,8 @@ namespace ClangPowerTools
 
     private static bool GetActiveConfiguration(Project aProject, out Configuration aConfiguration)
     {
+      //Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+
       aConfiguration = null;
 
       var configurationManager = aProject.ConfigurationManager;

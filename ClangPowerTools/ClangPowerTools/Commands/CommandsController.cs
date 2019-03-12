@@ -1,5 +1,4 @@
 ﻿using ClangPowerTools.Commands;
-using ClangPowerTools.DialogPages;
 using ClangPowerTools.Events;
 using ClangPowerTools.Handlers;
 using ClangPowerTools.Services;
@@ -114,7 +113,7 @@ namespace ClangPowerTools
 
       if (Running && command.CommandID.ID != CommandIds.kStopClang)
         return;
-      
+
       switch (command.CommandID.ID)
       {
         case CommandIds.kSettingsId:
@@ -187,7 +186,7 @@ namespace ClangPowerTools
       CurrentCommand = aCommandId;
       Running = true;
 
-      if(OutputWindowConstants.kCommandsNames.ContainsKey(aCommandId))
+      if (OutputWindowConstants.kCommandsNames.ContainsKey(aCommandId))
         OnClangCommandMessageTransfer(new ClangCommandMessageEventArgs($"\nStart {OutputWindowConstants.kCommandsNames[aCommandId]}\n", true));
 
       OnClangCommandBegin(new ClearErrorListEventArgs());
@@ -232,6 +231,7 @@ namespace ClangPowerTools
     {
       try
       {
+
         if (null == aGuid)
           return string.Empty;
 
@@ -241,6 +241,8 @@ namespace ClangPowerTools
         Command cmd = mCommand.Item(aGuid, aId);
         if (null == cmd)
           return string.Empty;
+
+        Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
         return cmd.Name;
       }
@@ -395,6 +397,8 @@ namespace ClangPowerTools
 
     public void CommandEventsBeforeExecute(string aGuid, int aId, object aCustomIn, object aCustomOut, ref bool aCancelDefault)
     {
+      Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+
       BeforeExecuteClangCompile(aGuid, aId);
       BeforeExecuteClangTidy(aGuid, aId);
     }
@@ -407,6 +411,8 @@ namespace ClangPowerTools
       if (null == generalOptions || false == generalOptions.ClangCompileAfterVsCompile)
         return;
 
+      Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+
       string commandName = GetCommandName(aGuid, aId);
       if (0 != string.Compare("Build.Compile", commandName))
         return;
@@ -417,6 +423,8 @@ namespace ClangPowerTools
 
     private void BeforeExecuteClangTidy(string aGuid, int aId)
     {
+      Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+
       string commandName = GetCommandName(aGuid, aId);
       if (0 != string.Compare("File.SaveAll", commandName) &&
         0 != string.Compare("File.SaveSelectedItems", commandName))

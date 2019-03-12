@@ -98,6 +98,8 @@ namespace ClangPowerTools.Commands
     {
       try
       {
+        Microsoft.VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+
         if (null == mClangFormatView)
         {
           FormatAllSelectedDocuments();
