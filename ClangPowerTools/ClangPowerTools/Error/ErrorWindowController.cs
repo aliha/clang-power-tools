@@ -1,14 +1,26 @@
-﻿using ClangPowerTools.Events;
+﻿using ClangPowerTools.Error.Tags;
+using ClangPowerTools.Events;
 using ClangPowerTools.Handlers;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.VisualStudio.Text.Tagging;
 using System;
+using System.Collections.Generic;
 
 namespace ClangPowerTools
 {
   public class ErrorWindowController : ErrorListProvider
   {
+    #region Members
+
+    private static ErrorTaggerProvider mErrorTaggerProvider = new ErrorTaggerProvider();
+
+    private static ErrorTagger tagger = new ErrorTagger();
+
+    #endregion
+
+
     #region Constructor
 
     /// <summary>
@@ -39,7 +51,12 @@ namespace ClangPowerTools
 
         ResumeRefresh();
         BringToFront();
+
+        mErrorTaggerProvider.Errors = e.ErrorList;
+        tagger = mErrorTaggerProvider.CreateTagger<IErrorTag>(DocumentsHandler.GetDocumentTextBuffer());
+
       });
+
     }
 
 

@@ -6,8 +6,10 @@ using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.CommandBars;
+using Microsoft.VisualStudio.ComponentModelHost;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.VisualStudio.TextManager.Interop;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -282,6 +284,14 @@ namespace ClangPowerTools
       // Get VS Solution service async
       var vsSolution = await GetServiceAsync(typeof(SVsSolution));
       VsServiceProvider.Register(typeof(SVsSolution), vsSolution);
+
+      // Get VS Text Manager service async
+      var vsTextManager = await GetServiceAsync(typeof(SVsTextManager));
+      VsServiceProvider.Register(typeof(SVsTextManager), vsTextManager);
+
+      // Get SComponentModel service async
+      var sComponentModel = await GetServiceAsync(typeof(SComponentModel));
+      VsServiceProvider.Register(typeof(SComponentModel), sComponentModel);
     }
 
 

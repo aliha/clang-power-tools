@@ -87,6 +87,9 @@
     <Compile Include="Convertors\ClangFormatStyleConverter.cs" />
     <Compile Include="Error\ErrorFormatter.cs" />
     <Compile Include="Builder\IBuilder.cs" />
+    <Compile Include="Error\Tags\ErrorTag.cs" />
+    <Compile Include="Error\Tags\ErrorTagger.cs" />
+    <Compile Include="Error\Tags\ErrorTaggerProvider.cs" />
     <Compile Include="Error\TaskErrorModelBuilder.cs" />
     <Compile Include="Events\ClangCommandEventArgs.cs" />
     <Compile Include="Events\CleanErrorListEventArgs.cs" />
@@ -310,6 +313,10 @@
     <Reference Include="Microsoft.VisualStudio.CommandBars, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.ComponentModelHost, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\VSSDK.ComponentModelHost.12.0.4\lib\net45\Microsoft.VisualStudio.ComponentModelHost.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.CoreUtility, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.Editor, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.OLE.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
@@ -376,6 +383,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
     <Reference Include="System.Design" />
     <Reference Include="System.Management" />
