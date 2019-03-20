@@ -52,10 +52,21 @@ namespace ClangPowerTools
         activeDocuments.SaveAll();
     }
 
-    public static ITextBuffer GetDocumentTextBuffer()
+    /// <summary>
+    /// Save all the active documents
+    /// </summary>
+    public static void SaveActiveDocument()
     {
-      var document = GetActiveDocument();
-      var openWindowPath = Path.Combine(document.Path, document.Name);
+      var activeDocument = GetActiveDocument();
+      if (null != activeDocument)
+        activeDocument.Save();
+    }
+
+
+    public static ITextBuffer GetDocumentTextBuffer(string aFilePath)
+    {
+      //var openWindowPath = Path.Combine(document.Path, document.Name);
+      var openWindowPath = aFilePath;
       return GetBufferAt(openWindowPath);
     }
 

@@ -10,7 +10,7 @@ namespace ClangPowerTools.Error.Tags
 
 
 
-    public ErrorTagger CreateTagger<T>(ITextBuffer buffer) where T : ITag
+    public ErrorTagger CreateTagger<T>(ITextBuffer buffer, string filePath) where T : ITag
     {
       var doc = GetBufferProperty<ITextDocument>(buffer);
 

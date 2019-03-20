@@ -1,7 +1,9 @@
 ﻿using ClangPowerTools.Error.Tags;
 using ClangPowerTools.Events;
 using ClangPowerTools.Handlers;
+using ClangPowerTools.Services;
 using EnvDTE;
+using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text.Tagging;
@@ -16,7 +18,9 @@ namespace ClangPowerTools
 
     private static ErrorTaggerProvider mErrorTaggerProvider = new ErrorTaggerProvider();
 
-    private static ErrorTagger tagger = new ErrorTagger();
+    private static List<ErrorTagger> tagger = new List<ErrorTagger>();
+
+    //private static ErrorTagger tagger = new ErrorTagger();
 
     #endregion
 
@@ -52,8 +56,35 @@ namespace ClangPowerTools
         ResumeRefresh();
         BringToFront();
 
+
+        var dte = (DTE2)VsServiceProvider.GetService(typeof(DTE));
+        var docs = dte.Documents;
+
+
+
+        tagger.Clear();
+
         mErrorTaggerProvider.Errors = e.ErrorList;
-        tagger = mErrorTaggerProvider.CreateTagger<IErrorTag>(DocumentsHandler.GetDocumentTextBuffer());
+
+
+        foreach(var error in mErrorTaggerProvider.Errors)
+        {
+          Document doc = null;
+          foreach(Document d in docs)
+          {
+            if(d.FullName.ToLower() == error.Document.ToLower())
+            {
+              doc = d;
+              break;
+            }
+          }
+
+          if (doc == null)
+            continue;
+
+          tagger.Add(mErrorTaggerProvider.CreateTagger<IErrorTag>(DocumentsHandler.GetDocumentTextBuffer(doc.FullName.ToLower()), doc.FullName.ToLower()));
+
+        }
 
       });
 

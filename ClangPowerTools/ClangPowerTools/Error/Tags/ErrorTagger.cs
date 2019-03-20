@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.Text.Tagging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace ClangPowerTools.Error.Tags
@@ -109,7 +110,7 @@ namespace ClangPowerTools.Error.Tags
         length = match.Index - error.Column;
       }
 
-      return new Span(2, 5);
+      return new Span(start, length);
     }
 
 
@@ -164,10 +165,10 @@ namespace ClangPowerTools.Error.Tags
       //}
 
 
-      //var errors = this.errors.Where(err => err.Document == document.FullName);
+      var errorss = this.errors.Where(err => err.Document.ToLower() == this.fileName.ToLower());
       var snapshot = this.buffer.CurrentSnapshot;
 
-      foreach (var error in errors)
+      foreach (var error in errorss)
       {
         if (error.Line > snapshot.LineCount)
         {
