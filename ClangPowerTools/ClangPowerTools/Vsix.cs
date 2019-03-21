@@ -40,6 +40,7 @@ namespace ClangPowerTools
       return VsToWpfTextView(textView);
     }
 
+
     public static IWpfTextView VsToWpfTextView(IVsTextView textView)
     {
       var userData = (IVsUserData)textView;

@@ -87,6 +87,15 @@
     <Compile Include="Convertors\ClangFormatStyleConverter.cs" />
     <Compile Include="Error\ErrorFormatter.cs" />
     <Compile Include="Builder\IBuilder.cs" />
+    <Compile Include="Error\Squiggles OLD\AsmDudeToolsStatic.cs" />
+    <Compile Include="Error\Squiggles OLD\AsmTokenTag.cs" />
+    <Compile Include="Error\Squiggles OLD\AsmTokenType.cs" />
+    <Compile Include="Error\Squiggles OLD\PredefinedErrorTypeNames.cs" />
+    <Compile Include="Error\Squiggles\DelegateListener.cs" />
+    <Compile Include="Error\Squiggles\IListener.cs" />
+    <Compile Include="Error\Squiggles\SquigglesTagger.cs" />
+    <Compile Include="Error\Squiggles\SquigglesTaggerProvider.cs" />
+    <Compile Include="Error\Squiggles\SquiggleTag.cs" />
     <Compile Include="Error\Tags\ErrorTag.cs" />
     <Compile Include="Error\Tags\ErrorTagger.cs" />
     <Compile Include="Error\Tags\ErrorTaggerProvider.cs" />
@@ -310,6 +319,12 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.Composite, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft_Composite_library_package.1.0.0\lib\Microsoft.Practices.Composite.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Composite.Presentation, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft_Composite_library_package.1.0.0\lib\Microsoft.Practices.Composite.Presentation.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.CommandBars, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>

@@ -1,43 +1,43 @@
-﻿using Microsoft.VisualStudio.Text;
-using Microsoft.VisualStudio.Text.Adornments;
-using Microsoft.VisualStudio.Text.Tagging;
+﻿//using Microsoft.VisualStudio.Text;
+//using Microsoft.VisualStudio.Text.Adornments;
+//using Microsoft.VisualStudio.Text.Tagging;
 
-namespace ClangPowerTools.Error.Tags
-{
-  internal class ErrorTag : IErrorTag
-  {
+//namespace ClangPowerTools.Error.Tags
+//{
+//  internal class ErrorTag : IErrorTag
+//  {
 
-    #region Members
+//    #region Members
 
-    private string mTooltip;
+//    private string mTooltip;
 
-    public ErrorTag()
-    {
-    }
+//    public ErrorTag()
+//    {
+//    }
 
-    #endregion
-
-
-    #region Constructor
-
-    public ErrorTag(ITrackingSpan aTrackingSpan, string aToolTip)
-    {
-      TrackingSpan = aTrackingSpan;
-      mTooltip = aToolTip;
-    }
-
-    #endregion
+//    #endregion
 
 
-    #region Properties
+//    #region Constructor
 
-    public ITrackingSpan TrackingSpan { get; private set; }
+//    public ErrorTag(ITrackingSpan aTrackingSpan, string aToolTip)
+//    {
+//      TrackingSpan = aTrackingSpan;
+//      mTooltip = aToolTip;
+//    }
 
-    public string ErrorType => PredefinedErrorTypeNames.CompilerError;
+//    #endregion
 
-    public object ToolTipContent => mTooltip;
 
-    #endregion
+//    #region Properties
 
-  }
-}
+//    public ITrackingSpan TrackingSpan { get; private set; }
+
+//    public string ErrorType => PredefinedErrorTypeNames.CompilerError;
+
+//    public object ToolTipContent => mTooltip;
+
+//    #endregion
+
+//  }
+//}

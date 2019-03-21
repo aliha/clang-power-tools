@@ -1,4 +1,5 @@
-﻿using ClangPowerTools.Error.Tags;
+﻿//using ClangPowerTools.Error.Tags;
+using ClangPowerTools.Error.Squiggles;
 using ClangPowerTools.Events;
 using ClangPowerTools.Handlers;
 using ClangPowerTools.Services;
@@ -16,11 +17,16 @@ namespace ClangPowerTools
   {
     #region Members
 
-    private static ErrorTaggerProvider mErrorTaggerProvider = new ErrorTaggerProvider();
+    // private static ErrorTaggerProvider mErrorTaggerProvider = new ErrorTaggerProvider();
 
-    private static List<ErrorTagger> tagger = new List<ErrorTagger>();
+    // private static List<ITagger<IErrorTag>> tagger = new List<ITagger<IErrorTag>>();
 
-    //private static ErrorTagger tagger = new ErrorTagger();
+    // private static ErrorTagger tagger = new ErrorTagger();
+
+
+    private static SquigglesTaggerProvider squigglesProvider = new SquigglesTaggerProvider();
+
+    private static List<ITagger<AsmTokenTag>> taggers = new List<ITagger<AsmTokenTag>>();
 
     #endregion
 
@@ -56,37 +62,66 @@ namespace ClangPowerTools
         ResumeRefresh();
         BringToFront();
 
-
-        var dte = (DTE2)VsServiceProvider.GetService(typeof(DTE));
-        var docs = dte.Documents;
+      });
 
 
-
-        tagger.Clear();
-
-        mErrorTaggerProvider.Errors = e.ErrorList;
+      var dte = (DTE2)VsServiceProvider.GetService(typeof(DTE));
+      var docs = dte.Documents;
 
 
-        foreach(var error in mErrorTaggerProvider.Errors)
+
+
+      foreach (var error in e.ErrorList)
+      {
+        Document doc = null;
+        foreach (Document d in docs)
         {
-          Document doc = null;
-          foreach(Document d in docs)
+          if (d.FullName.ToLower() == error.Document.ToLower())
           {
-            if(d.FullName.ToLower() == error.Document.ToLower())
-            {
-              doc = d;
-              break;
-            }
+            doc = d;
+            break;
           }
-
-          if (doc == null)
-            continue;
-
-          tagger.Add(mErrorTaggerProvider.CreateTagger<IErrorTag>(DocumentsHandler.GetDocumentTextBuffer(doc.FullName.ToLower()), doc.FullName.ToLower()));
-
         }
 
-      });
+        if (doc == null)
+          continue;
+
+
+        //var wpfTextView = Vsix.VsToWpfTextView(Vsix.GetVsTextViewFrompPath(doc.FullName));
+        //var squiggles = squigglesProvider.CreateTagger<AsmTokenTag>(wpfTextView, DocumentsHandler.GetDocumentTextBuffer(doc.FullName.ToLower()));
+
+        //taggers.Add(squiggles);
+
+
+      }
+
+
+
+
+      //tagger.Clear();
+
+      //mErrorTaggerProvider.Errors = e.ErrorList;
+
+
+      //foreach (var error in mErrorTaggerProvider.Errors)
+      //{
+      //  Document doc = null;
+      //  foreach (Document d in docs)
+      //  {
+      //    if (d.FullName.ToLower() == error.Document.ToLower())
+      //    {
+      //      doc = d;
+      //      break;
+      //    }
+      //  }
+
+      //  if (doc == null)
+      //    continue;
+
+      //  tagger.Add(mErrorTaggerProvider.CreateTagger<IErrorTag>(DocumentsHandler.GetDocumentTextBuffer(doc.FullName.ToLower())));
+
+      //}
+
 
     }
 

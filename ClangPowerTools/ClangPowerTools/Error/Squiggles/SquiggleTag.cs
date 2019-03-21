@@ -1,0 +1,16 @@
+﻿using Microsoft.VisualStudio.Text.Tagging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ClangPowerTools.Error.Squiggles
+{
+  public class SquiggleTag : TextMarkerTag
+  {
+    public SquiggleTag()
+           : base("MarkerFormatDefinition/DocumentedCodeFormatDefinition") { }
+
+  }
+}
