@@ -1,5 +1,5 @@
-﻿using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
+﻿using ClangPowerTools.Views;
+using Microsoft.VisualStudio.Shell;
 using System;
 using System.ComponentModel.Design;
 using Task = System.Threading.Tasks.Task;
@@ -84,8 +84,8 @@ namespace ClangPowerTools.Commands
         }
         catch (Exception exception)
         {
-          VsShellUtilities.ShowMessageBox(AsyncPackage, exception.Message, "Error",
-            OLEMSGICON.OLEMSGICON_CRITICAL, OLEMSGBUTTON.OLEMSGBUTTON_OK, OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+          var errorWindow = new UnexpectedErrorView(exception.Message);
+          errorWindow.Show();
         }
       });
     }

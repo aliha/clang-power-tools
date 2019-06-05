@@ -1,5 +1,6 @@
 ﻿using ClangPowerTools.Services;
 using ClangPowerTools.SilentFile;
+using ClangPowerTools.Views;
 using EnvDTE;
 using EnvDTE80;
 using Microsoft.VisualStudio.Shell;
@@ -111,8 +112,8 @@ namespace ClangPowerTools.Commands
         }
         catch (Exception exception)
         {
-          VsShellUtilities.ShowMessageBox(AsyncPackage, exception.Message, "Error",
-            OLEMSGICON.OLEMSGICON_CRITICAL, OLEMSGBUTTON.OLEMSGBUTTON_OK, OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+          var errorWindow = new UnexpectedErrorView(exception.Message);
+          errorWindow.Show();
         }
       });
     }

@@ -1,4 +1,5 @@
-﻿using EnvDTE;
+﻿using ClangPowerTools.Views;
+using EnvDTE;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text;
@@ -159,8 +160,8 @@ namespace ClangPowerTools.Commands
       }
       catch (Exception exception)
       {
-        VsShellUtilities.ShowMessageBox(AsyncPackage, exception.Message, "Error while running clang-format",
-          OLEMSGICON.OLEMSGICON_INFO, OLEMSGBUTTON.OLEMSGBUTTON_OK, OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+        var errorWindow = new UnexpectedErrorView(exception.Message);
+        errorWindow.Show();
       }
     }
 
