@@ -102,7 +102,6 @@ namespace ClangPowerTools
       mCommandController = new CommandController(this);
       CommandTestUtility.CommandController = mCommandController;
 
-
       var vsOutputWindow = VsServiceProvider.GetService(typeof(SVsOutputWindow)) as IVsOutputWindow;
 
       mOutputWindowController = new OutputWindowController();
