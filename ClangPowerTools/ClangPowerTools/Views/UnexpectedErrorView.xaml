@@ -1,4 +1,6 @@
-﻿<Window x:Class="ClangPowerTools.Views.UnexpectedErrorView"
+﻿<platformui:DialogWindow
+              xmlns:platformui="clr-namespace:Microsoft.VisualStudio.PlatformUI;assembly=Microsoft.VisualStudio.Shell.14.0"
+              x:Class="ClangPowerTools.Views.UnexpectedErrorView"
               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -14,9 +16,10 @@
               FontFamily="Leelawadee UI" 
               WindowStyle="None"
               Title="Clang Power Tools"
-              WindowStartupLocation="CenterScreen"
+              WindowStartupLocation="CenterOwner"
               BorderBrush="LightGray"
-              BorderThickness="1">
+              BorderThickness="1" 
+              ShowInTaskbar="False">
 
   <Border BorderBrush="Gray" Background="WhiteSmoke" BorderThickness="1">
     <Grid>
@@ -92,4 +95,4 @@
     </Grid>
   </Border>
 
-</Window>
+</platformui:DialogWindow>

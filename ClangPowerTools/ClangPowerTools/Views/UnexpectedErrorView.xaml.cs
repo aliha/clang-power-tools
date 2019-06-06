@@ -1,4 +1,5 @@
 ﻿using ClangPowerTools.ViewModels;
+using Microsoft.VisualStudio.PlatformUI;
 using System.Windows;
 
 namespace ClangPowerTools.Views
@@ -6,7 +7,7 @@ namespace ClangPowerTools.Views
   /// <summary>
   /// Interaction logic for UnexpectedErrorView.xaml
   /// </summary>
-  public partial class UnexpectedErrorView : Window
+  public partial class UnexpectedErrorView : DialogWindow
   {
     public UnexpectedErrorView(string message)
     {
