@@ -1,7 +1,8 @@
-﻿using ClangPowerTools.Views;
+﻿using ClangPowerTools.Helpers;
+using ClangPowerTools.Views;
 using EnvDTE;
+using Microsoft.Internal.VisualStudio.PlatformUI;
 using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 using System;
@@ -161,7 +162,7 @@ namespace ClangPowerTools.Commands
       catch (Exception exception)
       {
         var errorWindow = new UnexpectedErrorView(exception.Message);
-        errorWindow.Show();
+        WindowHelper.ShowModal(errorWindow, MainWindowUtility.GetPointer());
       }
     }
 

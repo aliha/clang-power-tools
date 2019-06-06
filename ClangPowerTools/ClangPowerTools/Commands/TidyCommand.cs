@@ -1,10 +1,11 @@
-﻿using ClangPowerTools.Services;
+﻿using ClangPowerTools.Helpers;
+using ClangPowerTools.Services;
 using ClangPowerTools.SilentFile;
 using ClangPowerTools.Views;
 using EnvDTE;
 using EnvDTE80;
+using Microsoft.Internal.VisualStudio.PlatformUI;
 using Microsoft.VisualStudio.Shell;
-using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.ComponentModel.Design;
 using System.Linq;
@@ -113,7 +114,7 @@ namespace ClangPowerTools.Commands
         catch (Exception exception)
         {
           var errorWindow = new UnexpectedErrorView(exception.Message);
-          errorWindow.Show();
+          WindowHelper.ShowModal(errorWindow, MainWindowUtility.GetPointer());
         }
       });
     }
