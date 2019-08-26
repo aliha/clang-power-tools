@@ -450,7 +450,10 @@ Function Generate-Pch( [Parameter(Mandatory=$true)] [string]   $stdafxDir
                      , [Parameter(Mandatory=$true)] [string]   $stdafxHeaderName
                      , [Parameter(Mandatory=$false)][string[]] $preprocessorDefinitions)
 {
-  [string] $stdafxSource = (Canonize-Path -base $stdafxDir -child $stdafxHeaderName)
+  [string] $stdafxSource = (Canonize-Path -base $stdafxDir -child $stdafxHeaderName -ignoreErrors:$true)
+  if ( $stdafxSource -eq $null) {
+   return ""
+  }
   [string] $stdafx = $stdafxSource + ".hpp"
 
   Copy-Item -Path $stdafxSource -Destination $stdafx > $null
